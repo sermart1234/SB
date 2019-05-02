@@ -59,6 +59,11 @@ void Game::genShips(int Map[10][10])
 
 }
 
+int Game::checkKill(int i, int j)
+{
+
+}
+
 Game::Game()
 {
     newGame();
@@ -66,18 +71,19 @@ Game::Game()
 }
 
 void Game::newGame(){
-    genShips(masMap);
-    genShips(masMapF);
-/*
+    //genShips(masMap);
+    //genShips(masMapF);
+
     for (int i=0; i<10; i++){
         for (int j=0; j<10; j++){
             masMap[i][j]=10*i+j+1;
             masMapF[i][j]=10*i+j+1;
+            masMapg[i][j]=-1;
             if (i==j){masMap[i][j]=1;}
             else masMapF[i][j]=1;
             printf("%d ", masMap[i][j]);
         }
         printf("\n");
-}*/
+}
 }
 

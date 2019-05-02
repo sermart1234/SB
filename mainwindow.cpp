@@ -180,7 +180,9 @@ void MainWindow::slotGetNumber()
     printf("%d ", indexButton);////////
     int i=indexButton/10;
     int j=indexButton%10-1;
-    int valueButton=game.masMap[i][j];////////// Говно код. Переделать
+    int valueButton;
+    if (i>9){valueButton=game.masMapF[i-10][j];}
+    else {valueButton=game.masMap[i][j];}////////// Говно код. Переделать
     if (valueButton==1){button->setIcon(QIcon("img/true.png"));}//setText("X");}
     else {button->setIcon(QIcon("img/false.png")); switchPlayer();}//setText(".");//setVisible(false);
     ui->lineEdit->setText(QString::number(valueButton));////////

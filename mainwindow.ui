@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1309</width>
-    <height>659</height>
+    <width>970</width>
+    <height>488</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <widget class="QPushButton" name="addButton">
     <property name="geometry">
      <rect>
-      <x>1200</x>
-      <y>40</y>
+      <x>870</x>
+      <y>50</y>
       <width>87</width>
       <height>29</height>
      </rect>
@@ -30,8 +30,8 @@
    <widget class="QPushButton" name="deleteButton">
     <property name="geometry">
      <rect>
-      <x>1210</x>
-      <y>90</y>
+      <x>860</x>
+      <y>80</y>
       <width>85</width>
       <height>29</height>
      </rect>
@@ -43,8 +43,8 @@
    <widget class="QLineEdit" name="lineEdit">
     <property name="geometry">
      <rect>
-      <x>1190</x>
-      <y>0</y>
+      <x>850</x>
+      <y>10</y>
       <width>113</width>
       <height>29</height>
      </rect>
@@ -56,8 +56,8 @@
    <widget class="QPushButton" name="pppButton">
     <property name="geometry">
      <rect>
-      <x>1210</x>
-      <y>130</y>
+      <x>870</x>
+      <y>120</y>
       <width>87</width>
       <height>29</height>
      </rect>
@@ -66,24 +66,13 @@
      <string>PushButton</string>
     </property>
    </widget>
-   <widget class="QWidget" name="verticalLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>0</y>
-      <width>631</width>
-      <height>411</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout"/>
-   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1309</width>
+     <width>970</width>
      <height>23</height>
     </rect>
    </property>

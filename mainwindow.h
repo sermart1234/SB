@@ -28,6 +28,9 @@ public slots:
 private:
     Ui::MainWindow *ui;
     Game game;
+    QDynamicButton* cells[10][10];
+    QDynamicButton* cells2[10][10];
+    void switchPlayer();
 };
 
 #endif // MAINWINDOW_H

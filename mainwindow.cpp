@@ -86,10 +86,12 @@ void MainWindow::on_addButton_clicked()
     QDynamicButton::ResID = 0;
     for(int i = 0; i < 10; i++){
       for(int j = 0; j < 10; j++) {
-    QDynamicButton *button = new QDynamicButton(this);  // Создаем объект динамической кнопки
+    //QDynamicButton *button
+    cells[i][j]= new QDynamicButton(this);  // Создаем объект динамической кнопки
     //Устанавливаем текст с номером этой кнопки
     //button->setGeometry(10, 10, 10, 10);
-    button->setGeometry(
+    //button
+    cells[i][j]->setGeometry(
       (cellSize + cellSpace) * j + leftSpace,
       (cellSize + cellSpace) * i + topSpace,
       cellSize, // Ширина кнопки
@@ -99,22 +101,24 @@ void MainWindow::on_addButton_clicked()
     // Добавляем кнопку в слой с вертикальной компоновкой
     //if (j==5){button->setVisible(false);}
     //else
-    button->setVisible(true);
+    //button
+    cells[i][j]->setVisible(true);
     //ui->verticalLayout->addWidget(button);
     //ui->verticalLayout->setGeometry(QRect(0, 0, 100-i*10, 100-i*10));
 
     //ui->centralWidget->
             //addWidget(button);
     // Подключаем сигнал нажатия кнопки к СЛОТ получения номера кнопки
-    connect(button, SIGNAL(clicked()), this, SLOT(slotGetNumber()));
+    connect(cells[i][j], SIGNAL(clicked()), this, SLOT(slotGetNumber()));
       }}
 
     for(int i = 0; i < 10; i++){
       for(int j = 0; j < 10; j++) {
-    QDynamicButton *button = new QDynamicButton(this);  // Создаем объект динамической кнопки
+    //QDynamicButton *button
+    cells2[i][j]= new QDynamicButton(this);  // Создаем объект динамической кнопки
     //Устанавливаем текст с номером этой кнопки
     //button->setGeometry(10, 10, 10, 10);
-    button->setGeometry(
+    cells2[i][j]->setGeometry(
       (cellSize + cellSpace) * j + leftSpace +11*40,
       (cellSize + cellSpace) * i + topSpace,// +10*40,
       cellSize, // Ширина кнопки
@@ -124,15 +128,16 @@ void MainWindow::on_addButton_clicked()
     // Добавляем кнопку в слой с вертикальной компоновкой
     //if (j==5){button->setVisible(false);}
     //else
-    button->setVisible(true);
-    //button->setEnabled(false);
+    cells2[i][j]->setVisible(true);
+    //button
+    cells2[i][j]->setEnabled(false);
     //ui->verticalLayout->addWidget(button);
     //ui->verticalLayout->setGeometry(QRect(0, 0, 100-i*10, 100-i*10));
 
     //ui->centralWidget->
             //addWidget(button);
     // Подключаем сигнал нажатия кнопки к СЛОТ получения номера кнопки
-    connect(button, SIGNAL(clicked()), this, SLOT(slotGetNumber()));
+    connect(cells2[i][j], SIGNAL(clicked()), this, SLOT(slotGetNumber()));
       }}
 }
 
@@ -175,12 +180,24 @@ void MainWindow::slotGetNumber()
     printf("%d ", indexButton);////////
     int i=indexButton/10;
     int j=indexButton%10-1;
-    int valueButton= game.masMap[i][j];////////// Говно код. Переделать
+    int valueButton=game.masMap[i][j];////////// Говно код. Переделать
     if (valueButton==1){button->setIcon(QIcon("img/true.png"));}//setText("X");}
-    else button->setIcon(QIcon("img/false.png"));//setText(".");//setVisible(false);
+    else {button->setIcon(QIcon("img/false.png")); switchPlayer();}//setText(".");//setVisible(false);
     ui->lineEdit->setText(QString::number(valueButton));////////
+    //switchPlayer();
     /* То есть номер кнопки устанавливается в поле lineEdit только тогда,
      * когда мы нажимаем одну из динамических кнопок, и этот номер соответствует
      * номеру нажатой кнопки
      * */
+}
+
+void MainWindow::switchPlayer()
+{
+    bool flag=cells[0][0]->isEnabled();
+    for(int i = 0; i < 10; i++){
+      for(int j = 0; j < 10; j++) {
+          cells[i][j]->setEnabled(!flag);
+          cells2[i][j]->setEnabled(flag);
+      }
+    }
 }

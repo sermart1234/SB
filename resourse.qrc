@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/img">
+        <file>img/false.png</file>
+        <file>img/true.png</file>
+    </qresource>
+</RCC>

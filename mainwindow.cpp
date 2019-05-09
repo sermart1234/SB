@@ -203,3 +203,5 @@ void MainWindow::switchPlayer()
       }
     }
 }
+
+//int MainWindow::checkKill(

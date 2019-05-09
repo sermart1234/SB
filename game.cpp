@@ -17,7 +17,7 @@ int Game::checkAbout(int Map[10][10], int i, int j, bool horizontal, int sizeShi
                 if (jc<0||jc>9) continue;
                 //printf("%d j\n", j);
                 if (Map[ic][jc]==1){return 1;};
-                Map[ic][jc]=2;
+                //Map[ic][jc]=2;
             }}}
     else {
          for (int ic=i; ic<(i+sizeShip); ic++){
@@ -27,7 +27,7 @@ int Game::checkAbout(int Map[10][10], int i, int j, bool horizontal, int sizeShi
                 if (jc<0||jc>9) continue;
                 //printf("%d j\n", j);
                 if (Map[ic][jc]==1){return 1;};
-                Map[ic][jc]=2;
+                //Map[ic][jc]=2;
             }}}
     return 0;
 }
@@ -59,10 +59,6 @@ void Game::genShips(int Map[10][10])
 
 }
 
-int Game::checkKill(int i, int j)
-{
-
-}
 
 Game::Game()
 {
@@ -71,16 +67,16 @@ Game::Game()
 }
 
 void Game::newGame(){
-    //genShips(masMap);
-    //genShips(masMapF);
+    genShips(masMap);
+    genShips(masMapF);
 
     for (int i=0; i<10; i++){
         for (int j=0; j<10; j++){
-            masMap[i][j]=10*i+j+1;
-            masMapF[i][j]=10*i+j+1;
-            masMapg[i][j]=-1;
-            if (i==j){masMap[i][j]=1;}
-            else masMapF[i][j]=1;
+            //masMap[i][j]=10*i+j+1;
+            //masMapF[i][j]=10*i+j+1;
+            //masMapg[i][j]=-1;
+            //if (i==j){masMap[i][j]=1;}
+            //else masMapF[i][j]=1;
             printf("%d ", masMap[i][j]);
         }
         printf("\n");

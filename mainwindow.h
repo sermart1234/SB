@@ -31,8 +31,9 @@ private:
     QDynamicButton* cells[10][10];
     QDynamicButton* cells2[10][10];
     void switchPlayer();
-    int checkKill(int i, int j);
+    int checkKill(int i, int *mas);
     int checkWin(int i, int j);
+    void setKill(int is, int js, int* mas, char flag);
 };
 
 #endif // MAINWINDOW_H

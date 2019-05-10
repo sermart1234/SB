@@ -7,18 +7,26 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    }
-
-
-    /* Для удобства работы слои разделены QSplitter
-         * */
-    //ui->splitter->setStretchFactor(0,1);//
-    //ui->splitter->setStretchFactor(1,0);//
-//}
+}
 
 MainWindow::~MainWindow()
 {
     delete ui;
+/*
+    printf("\n\n");
+    for (int i=0; i<10; i++){
+        for (int j=0; j<10; j++){
+            printf("%d ", game.masMap[i][j]);
+        }
+        printf("\n");}
+
+    printf("\n\n");
+    for (int i=0; i<10; i++){
+        for (int j=0; j<10; j++){
+            printf("%d ", game.masMapF[i][j]);
+        }
+        printf("\n");
+}*/
 }
 
 
@@ -169,28 +177,24 @@ void MainWindow::on_deleteButton_clicked()
  * */
 void MainWindow::slotGetNumber()
 {
-    /* Определяем объект, который вызвал сигнал
-     * */
     QDynamicButton *button = (QDynamicButton*) sender();
-    /* После чего устанавливаем номер кнопки в lineEdit,
-     * который содержится в данной динамической кнопке
-     * */
-    //ui->lineEdit->setText(QString::number(button->getID()));
+
     int indexButton=button->getID();
-    printf("%d ", indexButton);////////
     int i=indexButton/10;
     int j=indexButton%10-1;
     int valueButton;
-    if (i>9){valueButton=game.masMapF[i-10][j];}
-    else {valueButton=game.masMap[i][j];}////////// Говно код. Переделать
-    if (valueButton==1){button->setIcon(QIcon("img/true.png"));}//setText("X");}
-    else {button->setIcon(QIcon("img/false.png")); switchPlayer();}//setText(".");//setVisible(false);
-    ui->lineEdit->setText(QString::number(valueButton));////////
-    //switchPlayer();
-    /* То есть номер кнопки устанавливается в поле lineEdit только тогда,
-     * когда мы нажимаем одну из динамических кнопок, и этот номер соответствует
-     * номеру нажатой кнопки
-     * */
+    int *mas=(int*)game.masMap;
+    char flag=0;
+
+    if (i>9){mas=(int*)game.masMapF; i=i-10; flag=1;};
+    valueButton=mas[10*i+j];
+
+    if (valueButton>1){button->setIcon(QIcon("img/true.png")); mas[10*i+j]=2;}
+    else {button->setIcon(QIcon("img/false.png")); if (valueButton!=1){switchPlayer();} mas[10*i+j]=1; }
+
+    if (checkKill(valueButton, mas)){printf("kill\n"); setKill(i, j, mas, flag);}; //button->setIcon(QIcon("img/kill.png"));};
+
+    ui->lineEdit->setText(QString::number(indexButton));
 }
 
 void MainWindow::switchPlayer()
@@ -204,4 +208,57 @@ void MainWindow::switchPlayer()
     }
 }
 
-//int MainWindow::checkKill(
+int MainWindow::checkKill(int id, int* mas)
+{   //printf("check\n");
+    for (int i=0; i<10; i++){
+            for (int j=0; j<10; j++){
+                if (mas[10*i+j]==id){return 0;}
+                //printf("%d ", mas[10*i+j]);
+            }
+         //printf("\n");
+    }
+    return 1;
+}
+
+
+void MainWindow::setKill(int is, int js, int* mas, char flag)
+{
+    int i= is;
+    int j= js;
+    for (int i=is;i>(is-4);i--)
+    {
+        if (i==0){break;}
+        if (mas[10*i+j]==2){
+            if (flag){cells2[i][j]->setIcon(QIcon("img/kill.png"));}
+            else {cells[i][j]->setIcon(QIcon("img/kill.png"));}}
+        else break;}
+
+    for (int i=is;i<(is+4);i++)
+    {
+        if (i==9){break;}
+        if (mas[10*i+j]==2){
+            if (flag){cells2[i][j]->setIcon(QIcon("img/kill.png"));}
+            else {cells[i][j]->setIcon(QIcon("img/kill.png"));}}
+        else break;
+    }
+
+    for (int j=is;j>(js-4);i--)
+    {
+        if (j==0){break;}
+        if (mas[10*i+j]==2){
+            if (flag){cells2[i][j]->setIcon(QIcon("img/kill.png"));}
+            else {cells[i][j]->setIcon(QIcon("img/kill.png"));};}
+        else break;
+    }
+    for (int j=is;j<(js+4);i++)
+    {
+        if (j==9){break;}
+        if (mas[10*i+j]==2){
+            if (flag){cells2[i][j]->setIcon(QIcon("img/kill.png"));}
+            else {cells[i][j]->setIcon(QIcon("img/kill.png"));};}
+        else break;
+    }
+
+}
+
+

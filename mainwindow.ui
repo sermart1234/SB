@@ -23,6 +23,10 @@
       <height>29</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:1 rgba(0, 0, 255, 255));
+</string>
+    </property>
     <property name="text">
      <string>addButton</string>
     </property>

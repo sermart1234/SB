@@ -1,12 +1,16 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "game.h"
+#include <QColor>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    game.Win=10;
+    game.WinF=10;
+    game.Flag=1;
 }
 
 MainWindow::~MainWindow()
@@ -152,26 +156,71 @@ void MainWindow::on_addButton_clicked()
 
 
 
-/* Метод для удаления динамической кнопки по её номеру
+//Метод для удаления динамической кнопки по её номеру
 void MainWindow::on_deleteButton_clicked()
 {
-    * Выполняем перебор всех элементов слоя, где располагаются динамические кнопки
+    int cellSize = 40; // Размер кнопки
+    int cellSpace = 0; // Отступ
+    int topSpace = 40; // Отступ сверху
+    int leftSpace = 0; // Отступ слева
+    //QDynamicButton::ResID=0;
+    QDynamicButton::ResID = 0;
+    for(int i = 0; i < 10; i++){
+      for(int j = 0; j < 10; j++) {
+    //QDynamicButton *button
+    cells[i][j]= new QDynamicButton(this);  // Создаем объект динамической кнопки
+    //Устанавливаем текст с номером этой кнопки
+    //button->setGeometry(10, 10, 10, 10);
+    //button
+    cells[i][j]->setGeometry(
+      (cellSize + cellSpace) * j + leftSpace,
+      (cellSize + cellSpace) * i + topSpace,
+      cellSize, // Ширина кнопки
+      cellSize  // Высота кнопки
+    );
+    //button->setIcon(QIcon("img/false.png"));//setText("К " + QString::number(button->getID()));
+    // Добавляем кнопку в слой с вертикальной компоновкой
+    //if (j==5){button->setVisible(false);}
+    //else
+    //button
+    cells[i][j]->setVisible(true);
+    //ui->verticalLayout->addWidget(button);
+    //ui->verticalLayout->setGeometry(QRect(0, 0, 100-i*10, 100-i*10));
 
-    for(int i = 0; i < ui->verticalLayout->count(); i++){
-        * Производим каст элемента слоя в объект динамической кнопки
-         * *
-        QDynamicButton *button = qobject_cast<QDynamicButton*>(ui->verticalLayout->itemAt(i)->widget());
-         Если номер кнопки соответствует числу, которое установлено
-         * в lineEdit, то производим удаление данной кнопки
-         * *
-        if(button->getID() == ui->lineEdit->text().toInt()){
-            button->hide();
+    //ui->centralWidget->
+            //addWidget(button);
+    // Подключаем сигнал нажатия кнопки к СЛОТ получения номера кнопки
+    connect(cells[i][j], SIGNAL(clicked()), this, SLOT(slotGetNumber2()));
+      }}
 
-            //delete button;
-        }
-        button->setVisible(false);
-    }
-}*/
+    for(int i = 0; i < 10; i++){
+      for(int j = 0; j < 10; j++) {
+    //QDynamicButton *button
+    cells2[i][j]= new QDynamicButton(this);  // Создаем объект динамической кнопки
+    //Устанавливаем текст с номером этой кнопки
+    //button->setGeometry(10, 10, 10, 10);
+    cells2[i][j]->setGeometry(
+      (cellSize + cellSpace) * j + leftSpace +11*40,
+      (cellSize + cellSpace) * i + topSpace,// +10*40,
+      cellSize, // Ширина кнопки
+      cellSize  // Высота кнопки
+    );
+    //button->setIcon(QIcon("img/false.png"));//setText("К " + QString::number(button->getID()));
+    // Добавляем кнопку в слой с вертикальной компоновкой
+    //if (j==5){button->setVisible(false);}
+    //else
+    cells2[i][j]->setVisible(true);
+    //button
+    cells2[i][j]->setEnabled(false);
+    //ui->verticalLayout->addWidget(button);
+    //ui->verticalLayout->setGeometry(QRect(0, 0, 100-i*10, 100-i*10));
+
+    //ui->centralWidget->
+            //addWidget(button);
+    // Подключаем сигнал нажатия кнопки к СЛОТ получения номера кнопки
+    connect(cells2[i][j], SIGNAL(clicked()), this, SLOT(slotGetNumber2()));
+      }}
+}
 
 /* СЛОТ для получения номера кнопки.
  * */
@@ -189,12 +238,51 @@ void MainWindow::slotGetNumber()
     if (i>9){mas=(int*)game.masMapF; i=i-10; flag=1;};
     valueButton=mas[10*i+j];
 
-    if (valueButton>1){button->setIcon(QIcon("img/true.png")); mas[10*i+j]=2;}
-    else {button->setIcon(QIcon("img/false.png")); if (valueButton!=1){switchPlayer();} mas[10*i+j]=1; }
+    if (valueButton>2){button->setIcon(QIcon("img/true.png")); mas[10*i+j]=2;}
+    else {if(valueButton!=2){//button->setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:1 rgba(0, 0, 255, 255));");
+                        //QColor::red());//
+            button->setIcon(QIcon("img/false.png"));
+            if (valueButton!=1){switchPlayer();}
+            mas[10*i+j]=1; }}
 
-    if (checkKill(valueButton, mas)){printf("kill\n"); setKill(i, j, mas, flag);}; //button->setIcon(QIcon("img/kill.png"));};
+    if (checkKill(valueButton, mas, flag)){printf("kill\n"); setKill(i, j, mas, flag); checkWin();}; //button->setIcon(QIcon("img/kill.png"));};
 
     ui->lineEdit->setText(QString::number(indexButton));
+}
+
+void MainWindow::slotGetNumber2()
+{
+    QDynamicButton *button = (QDynamicButton*) sender();
+
+    int indexButton=button->getID();
+    int i=indexButton/10;
+    int j=indexButton%10-1;
+    int valueButton;
+    int *mas=(int*)game.masMap;
+    char flag=0;
+
+
+
+    if (i>9){mas=(int*)game.masMapF; i=i-10; flag=1;};
+    valueButton=mas[10*i+j];
+
+    if (valueButton>2){button->setIcon(QIcon("img/true.png")); mas[10*i+j]=2;}
+    else {if(valueButton!=2){//button->setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:1 rgba(0, 0, 255, 255));");
+                        //QColor::red());//
+            button->setIcon(QIcon("img/false.png"));
+            if (valueButton!=1){if (game.Flag){printf("%d", game.Flag); game.Flag=0; printf("BOT\n"); goBot(); }}
+            mas[10*i+j]=1; }}
+    game.Flag=1;
+    if (checkKill(valueButton, mas, flag)){printf("kill\n"); setKill(i, j, mas, flag); checkWin();}; //button->setIcon(QIcon("img/kill.png"));};
+
+    ui->lineEdit->setText(QString::number(indexButton));
+}
+
+void MainWindow::goBot()
+{
+    int i=rand() % 10;
+    int j=rand() % 10;
+    cells2[i][j]->clicked();
 }
 
 void MainWindow::switchPlayer()
@@ -208,7 +296,7 @@ void MainWindow::switchPlayer()
     }
 }
 
-int MainWindow::checkKill(int id, int* mas)
+int MainWindow::checkKill(int id, int* mas, char flag)
 {   //printf("check\n");
     for (int i=0; i<10; i++){
             for (int j=0; j<10; j++){
@@ -217,6 +305,9 @@ int MainWindow::checkKill(int id, int* mas)
             }
          //printf("\n");
     }
+    if (flag){game.Win--;}
+    else {game.WinF--;}
+    printf("%d %d\n", game.Win, game.WinF);
     return 1;
 }
 
@@ -227,38 +318,49 @@ void MainWindow::setKill(int is, int js, int* mas, char flag)
     int j= js;
     for (int i=is;i>(is-4);i--)
     {
-        if (i==0){break;}
         if (mas[10*i+j]==2){
             if (flag){cells2[i][j]->setIcon(QIcon("img/kill.png"));}
             else {cells[i][j]->setIcon(QIcon("img/kill.png"));}}
-        else break;}
+        else break;
+        if (i==0){break;}
+    }
 
     for (int i=is;i<(is+4);i++)
     {
-        if (i==9){break;}
         if (mas[10*i+j]==2){
             if (flag){cells2[i][j]->setIcon(QIcon("img/kill.png"));}
             else {cells[i][j]->setIcon(QIcon("img/kill.png"));}}
         else break;
+        if (i==9){break;}
     }
 
-    for (int j=is;j>(js-4);i--)
+    i= is;
+    j= js;
+
+    for (int j=js;j>(js-4);j--)
     {
+
+        if (mas[10*i+j]==2){
+            if (flag){cells2[i][j]->setIcon(QIcon("img/kill.png"));}
+            else {cells[i][j]->setIcon(QIcon("img/kill.png"));};}
+        else break;
         if (j==0){break;}
-        if (mas[10*i+j]==2){
-            if (flag){cells2[i][j]->setIcon(QIcon("img/kill.png"));}
-            else {cells[i][j]->setIcon(QIcon("img/kill.png"));};}
-        else break;
     }
-    for (int j=is;j<(js+4);i++)
+    for (int j=js;j<(js+4);j++)
     {
-        if (j==9){break;}
+
         if (mas[10*i+j]==2){
             if (flag){cells2[i][j]->setIcon(QIcon("img/kill.png"));}
             else {cells[i][j]->setIcon(QIcon("img/kill.png"));};}
         else break;
+        if (j==9){break;}
     }
 
 }
 
-
+int MainWindow::checkWin()
+{
+    if (game.Win==0){printf("Победил первый игрок");return 1;};
+    if (game.WinF==0){printf("Победил второй игрок");return 1;};
+    return 0;
+}

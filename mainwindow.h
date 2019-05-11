@@ -24,6 +24,7 @@ public slots:
     void on_addButton_clicked();    // СЛОТ-обработчик нажатия кнопки добавления
     void on_deleteButton_clicked(); // СЛОТ-обработчик нажатия кнопки удаления
     void slotGetNumber();           // СЛОТ для получения номера нажатой динамической кнопки
+    void slotGetNumber2();
 
 private:
     Ui::MainWindow *ui;
@@ -31,9 +32,10 @@ private:
     QDynamicButton* cells[10][10];
     QDynamicButton* cells2[10][10];
     void switchPlayer();
-    int checkKill(int i, int *mas);
-    int checkWin(int i, int j);
+    int checkKill(int i, int *mas, char flag);
+    int checkWin();
     void setKill(int is, int js, int* mas, char flag);
+    void goBot();
 };
 
 #endif // MAINWINDOW_H

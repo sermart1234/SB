@@ -27,15 +27,18 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     cellbutton.cpp \
-    game.cpp
+    game.cpp \
+    winner.cpp
 
 HEADERS += \
         mainwindow.h \
     cellbutton.h \
-    game.h
+    game.h \
+    winner.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    winner.ui
 
 RESOURCES += \
     resourse.qrc

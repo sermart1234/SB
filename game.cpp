@@ -66,33 +66,25 @@ void Game::genShips(int Map[10][10])
 
 Game::Game()
 {
-    newGame();
+    //newGame();
 
 }
 
 void Game::newGame(){
+    Win=10;
+    WinF=10;
+    for (int i=0; i<10; i++){
+        for (int j=0; j<10; j++){
+            masMap[i][j]=0;
+            masMapF[i][j]=0;
+        }
+    }
     srand(time(NULL));
     genShips(masMap);
     genShips(masMapF);
     //masMap[9][9]=20;
     //genShips(masMapg);
-    for (int i=0; i<10; i++){
-        for (int j=0; j<10; j++){
-            //masMap[i][j]=10*i+j+1;
-            //masMapF[i][j]=10*i+j+1;
-            //masMapg[i][j]=-1;
-            //if (i==j){masMap[i][j]=1;}
-            //else masMapF[i][j]=1;
-            printf("%d ", masMap[i][j]);
-        }
-        printf("\n");
-}
-    printf("\n\n");
-    for (int i=0; i<10; i++){
-        for (int j=0; j<10; j++){
-            printf("%d ", masMapF[i][j]);
-        }
-        printf("\n");
-}
+
+
 }
 

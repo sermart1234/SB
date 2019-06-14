@@ -35,6 +35,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     Game game;
+    struct acrossShip cross;
     //Winner win(this); // = new Winner(this);
     QDynamicButton* cells[10][10];
     QDynamicButton* cells2[10][10];
@@ -43,7 +44,9 @@ private:
     int checkKill(int i, int *mas, char flag);
     int checkWin();
     void setKill(int is, int js, int* mas, char flag);
+    //void goBot(int i, int j, int f);
     void goBot();
+    void reversPlus(int *plus);
 };
 
 #endif // MAINWINDOW_H

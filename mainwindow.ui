@@ -27,19 +27,6 @@
      <string notr="true"/>
     </property>
    </widget>
-   <widget class="QPushButton" name="pppButton">
-    <property name="geometry">
-     <rect>
-      <x>870</x>
-      <y>120</y>
-      <width>87</width>
-      <height>29</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>PushButton</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
@@ -53,30 +40,30 @@
      <string>win</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QLCDNumber" name="lcdNumber">
     <property name="geometry">
      <rect>
-      <x>160</x>
-      <y>410</y>
-      <width>71</width>
-      <height>31</height>
+      <x>170</x>
+      <y>420</y>
+      <width>64</width>
+      <height>23</height>
      </rect>
     </property>
-    <property name="text">
-     <string>TextLabel</string>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QLCDNumber" name="lcdNumber_2">
     <property name="geometry">
      <rect>
-      <x>630</x>
+      <x>610</x>
       <y>420</y>
-      <width>54</width>
-      <height>17</height>
+      <width>64</width>
+      <height>23</height>
      </rect>
     </property>
-    <property name="text">
-     <string>TextLabel</string>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);</string>
     </property>
    </widget>
   </widget>
@@ -91,9 +78,10 @@
    </property>
    <widget class="QMenu" name="menu">
     <property name="title">
-     <string>Menu</string>
+     <string>Меню</string>
     </property>
-    <addaction name="action_3"/>
+    <addaction name="exit"/>
+    <addaction name="delWinList"/>
    </widget>
    <widget class="QMenu" name="menu_2">
     <property name="title">
@@ -130,9 +118,14 @@
     <string>С ботом</string>
    </property>
   </action>
-  <action name="action_3">
+  <action name="exit">
    <property name="text">
-    <string>Сохранить игру</string>
+    <string>Выйти</string>
+   </property>
+  </action>
+  <action name="delWinList">
+   <property name="text">
+    <string>Удалить список победителей</string>
    </property>
   </action>
  </widget>

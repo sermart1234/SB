@@ -11,10 +11,6 @@ public:
     ~QDynamicButton();
     static int ResID;   // Статическая переменная, счетчик номеров кнопок
     int getID();        // Функция для возврата локального номера кнопки
-    //char masMap[10][10]={};//
-
-
-public slots:
 
 private:
     int buttonID = 0;   // Локальная переменная, номер кнопки

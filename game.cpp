@@ -4,31 +4,26 @@
 int Game::checkAbout(int Map[10][10], int i, int j, bool horizontal, int sizeShip)
 {
     i--;
-    //printf("%d\n", i);
     j--;
-    //printf("%d\n", j);
     sizeShip+=2;
-    //printf("%d\n", sizeShip);
     if (horizontal){
         for (int ic=i; ic<(i+3); ic++){
             if (ic<0||ic>9) continue;
-            //printf("%d i\n", i);
             for (int jc=j; jc<(j+sizeShip); jc++){
                 if (jc<0||jc>9) continue;
-                //printf("%d j\n", j);
                 if (Map[ic][jc]>1){return 1;};
-                //Map[ic][jc]=2;
-            }}}
+            }
+        }
+    }
     else {
          for (int ic=i; ic<(i+sizeShip); ic++){
             if (ic<0||ic>9) continue;
-            //printf("%d i\n", i);
             for (int jc=j; jc<(j+3); jc++){
                 if (jc<0||jc>9) continue;
-                //printf("%d j\n", j);
                 if (Map[ic][jc]>1){return 1;};
-                //Map[ic][jc]=2;
-            }}}
+            }
+         }
+    }
     return 0;
 }
 
@@ -38,9 +33,7 @@ void Game::genShips(int Map[10][10])
     int j=0;
     int size[10]={4, 3, 3, 2, 2, 2, 1, 1, 1, 1};
     int id=3;
-    //srand(time(NULL));
     for (int s=0; s<10;s++){
-        //printf("%d\n", s);
         bool horizontal=rand()%2;
         if (horizontal){
             i=rand()%10;
@@ -49,7 +42,8 @@ void Game::genShips(int Map[10][10])
             for (int ss=0; ss<size[s]; ss++){
                 Map[i][j+ss]=id;
             }
-        id++;}
+        id++;
+        }
         else {
             j=rand()%10;
             i=rand()%(11-size[s]);
@@ -60,35 +54,25 @@ void Game::genShips(int Map[10][10])
             id++;
         }
      }
-
 }
 
 int Game::checkAbout(int Map[10][10], int i, int j)
 {
     i--;
-    //printf("%d\n", i);
     j--;
-    //printf("%d\n", j);
     int sizeShip=1;
     sizeShip+=2;
-    //printf("%d\n", sizeShip);
         for (int ic=i; ic<(i+3); ic++){
             if (ic<0||ic>9) continue;
-            //printf("%d i\n", i);
             for (int jc=j; jc<(j+sizeShip); jc++){
                 if (jc<0||jc>9) continue;
-                //printf("%d j\n", j);
                 if (Map[ic][jc]==2){return 1;};
-                //Map[ic][jc]=2;
-            }}
+            }
+        }
     return 0;
 }
 
-Game::Game()
-{
-    //newGame();
-
-}
+Game::Game(){}
 
 void Game::newGame(){
     Win=10;
@@ -103,9 +87,4 @@ void Game::newGame(){
     srand(time(NULL));
     genShips(masMap);
     genShips(masMapF);
-    //masMap[9][9]=20;
-    //genShips(masMapg);
-
-
 }
-

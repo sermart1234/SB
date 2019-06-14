@@ -8,7 +8,6 @@ namespace Ui {
 class Winner;
 }
 
-//class Winner : public QWidget
 class Winner : public QDialog
 {
     Q_OBJECT
@@ -16,12 +15,15 @@ class Winner : public QDialog
 public:
     explicit Winner(QWidget *parent = 0);
     ~Winner();
-    void setWinner(char *s);
+    void setWinner(char *s, char f);
+        //struct acrossShip cross;
+    char bot;
 
 private slots:
     void on_pushButton_clicked();
-
     void on_buttonBox_accepted();
+
+    void on_buttonBox_rejected();
 
 private:
     Ui::Winner *ui;

@@ -6,40 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>970</width>
-    <height>488</height>
+    <width>840</width>
+    <height>476</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QLineEdit" name="lineEdit">
-    <property name="geometry">
-     <rect>
-      <x>850</x>
-      <y>10</y>
-      <width>113</width>
-      <height>29</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true"/>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>870</x>
-      <y>160</y>
-      <width>87</width>
-      <height>29</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>win</string>
-    </property>
-   </widget>
    <widget class="QLCDNumber" name="lcdNumber">
     <property name="geometry">
      <rect>
@@ -72,7 +46,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>970</width>
+     <width>840</width>
      <height>23</height>
     </rect>
    </property>
@@ -93,7 +67,6 @@
    <addaction name="menu"/>
    <addaction name="menu_2"/>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
   <action name="actionNew_game">
    <property name="checkable">
     <bool>false</bool>

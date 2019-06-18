@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-//#include "game.h"
 #include "winner.h"
 #include "game.h"
 
@@ -95,8 +94,6 @@ void MainWindow::slotGetNumber()
             mas[10*i+j]=1; }}
 
     if (checkKill(valueButton, mas, flag)){setKill(i, j, mas, flag); checkWin();};
-
-    ui->lineEdit->setText(QString::number(indexButton));
 }
 
 
@@ -105,8 +102,9 @@ void MainWindow::slotGetNumber2()
     QDynamicButton *button = (QDynamicButton*) sender();
 
     int indexButton=button->getID();
+    indexButton-=1;
     int i=indexButton/10;
-    int j=indexButton%10-1;
+    int j=indexButton%10;
     int valueButton;
     int *mas=(int*)game.masMap;
     char flag=0;
@@ -125,7 +123,6 @@ void MainWindow::slotGetNumber2()
         else {if (flag) {goBotF=1;}}}
     if (checkKill(valueButton, mas, flag)){setKill(i, j, mas, flag); checkWin();};
 
-    ui->lineEdit->setText(QString::number(indexButton));
     if (goBotF) goBot();
 }
 
@@ -204,15 +201,29 @@ void MainWindow::disablePlayer()
     }
 }
 
+int setIndex(int i, int j){
+    asm(
+        "movl    %edi, -4(%rbp)\n"
+        "movl    %esi, -8(%rbp)\n"
+        "movl    -4(%rbp), %eax\n"
+        "imull   $10, %eax, %edx\n"
+        "movl    -8(%rbp), %eax\n"
+        "addl    %edx, %eax\n"
+        );
+}
+
 int MainWindow::checkKill(int id, int* mas, char flag)
 {
+    int index;
     for (int i=0; i<10; i++){
             for (int j=0; j<10; j++){
-                if (mas[10*i+j]==id){return 0;}
-            }
+                index=setIndex(i, j);
+                if (mas[index]==id){return 0;}
+            };
     }
     if (flag){game.Win--;game.BotDmg=0;}
     else {game.WinF--;}
+
     ui->lcdNumber->display(game.WinF);
     ui->lcdNumber_2->display(game.Win);
     return 1;
@@ -262,21 +273,25 @@ void MainWindow::setKill(int is, int js, int* mas, char flag)
         else break;
         if (j==9){break;}
     }
-
 }
 
 int MainWindow::checkWin()
 {
-    Winner win(this);
-    disablePlayer();
+
     if (game.Win==0){
+        Winner win(this);
+        disablePlayer();
         if (cross.flag) win.setWinner("Победил BOT", 1);
         else win.setWinner("Победил второй игрок", 0);
+        win.exec();
     }
     if (game.WinF==0){
+        Winner win(this);
+        disablePlayer();
         win.setWinner("Победил первый игрок", 0);
+        win.exec();
     }
-    win.exec();
+
 
     return 0;
 }
